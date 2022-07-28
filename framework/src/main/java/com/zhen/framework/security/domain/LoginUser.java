@@ -62,6 +62,10 @@ public class LoginUser implements UserDetails {
         this.permissions = permissions;
     }
 
+    /**
+     * 通过该函数将权限列表(String)转换成SpringSecurity中的权限信息
+     * @return
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // 因为返回值类型要是一个值类型为GrantedAuthority的集合，因此需要进行类型转换
@@ -72,6 +76,10 @@ public class LoginUser implements UserDetails {
         return authorities;
     }
 
+    /**
+     * 通过这个getter获取LoginUser中的User的密码,然后拿去比对
+     * @return
+     */
     @Override
     public String getPassword() {
         return user.getPassword();

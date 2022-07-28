@@ -29,6 +29,10 @@ public class TokenService {
     // token过期时间(分钟)
     @Value("${token.expireTime}")
     private int expireTime;
+    
+    // 自定义token请求头表示
+    @Value("${token.header}")
+    private String header;
 
     /**
      * 1s = 1000ms
@@ -47,13 +51,14 @@ public class TokenService {
      */
     public LoginUser getLoginUser(HttpServletRequest request) {
         // 获取请求头上的token
-        String token = request.getHeader("token");
+        String token = request.getHeader(header);
         if(StringUtils.hasText(token)) {
             try {
                 // 解析获得载荷内容
                 Claims claims = JwtUtil.parseJWT(token);
                 String uuid = claims.getSubject();
                 String redisTokenKey = getRedisTokenKey(uuid);
+                // redis中没有找到该key
                 if(!redisUtil.hasKey(redisTokenKey)) return null;
                 
                 // 对象中有list的情况，需要这样转换才能反序列化！
@@ -62,9 +67,7 @@ public class TokenService {
                 return loginUser;
             } 
             catch (Exception e) {
-                
                 // 不抛出异常, 不然匿名访问会被拦截
-                
                 //throw new RuntimeException("token非法");
             }
         }

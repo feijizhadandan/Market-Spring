@@ -6,6 +6,7 @@ import com.zhen.framework.security.filter.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationEntryPointImpl authenticationEntryPoint;
 
     /**
-     * BCrypt 密码生成校验器
+     * BCrypt 密码生成、校验器
      * @return
      */
     @Bean
@@ -63,13 +64,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                /**
+                 * 是否允许访问，是在SpringSecurity过滤器链最后的一个FilterSecurityInterceptor拦截器中进行判断
+                 * 查看自身线程的Holder中是否存在LoginUser信息(在Filter中如果通过验证就会存进去)：
+                 *      如果没有LoginUser信息，说明是匿名访问
+                 *      如果有，则进行权限控制(存进Holder时，存了一份权限列表进去)
+                 */
                 // 对于登录接口，允许匿名访问
-                .antMatchers("/user/login").anonymous()
+                .antMatchers("/login").anonymous()
                 // 对于积木报表资源，允许匿名访问
-                .antMatchers("/jmreport/**").anonymous()
-                // 除了登录接口，都需要认证
+                .antMatchers("/jmreport/**").permitAll()
+                // 静态资源，可匿名访问
+                .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
+                .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()                
+                // 其他都需要认证
                 .anyRequest().authenticated();
 
+        /**
+         * 区分登录和认证的区别：
+         *      登录：在Filter中查询到redis中没有该token信息，或没有携带token，那么只能访问LoginController接口
+         *           在LoginServiceImpl中实现用户名密码校验，校验成功则放入redis，并返回token字符串
+         *           
+         *      认证：携带的token，在Filter中解析后，发现redis中存在认证信息，
+         *           从redis中取出对应的LoginUser，LoginUser中包含权限信息，在Filter中放入Holder，即可完成权限的认证。
+         */
+        
         // 还要将JwtFilter注册到SpringSecurity中, 用于认证是否已登录
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         

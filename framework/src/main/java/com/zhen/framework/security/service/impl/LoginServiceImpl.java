@@ -39,7 +39,19 @@ public class LoginServiceImpl implements LoginService {
      */
     @Override
     public AjaxResult login(User user) {
-        // 通过 AuthenticationManager(在SecurityConfig中注入容器) 进行用户身份认证
+        /*
+            1、将用户名密码封装成 UsernamePasswordAuthenticationToken (Authentication子类)
+            2、通过 authenticationManager的authenticate 方法, 传入(1)的对象, 进行身份验证
+                2.1、authenticate方法会调用UserDetailsService的实现类进行验证
+                2.2、自己写一个UserDetailsService的实现类UserDetailsServiceImpl, 其结果应当返回UserDetails的子类(LoginUser)
+                2.3、LoginUser中还应当封装了权限列表 List<String> permissions, 在UserDetailsServiceImpl中查询赋值
+            3、认证结果：
+                认证失败：抛出异常
+                认证通过：取出其中的LoginUser, 调用handleToken，将其存入redis，并返回一个token字符串
+            4、返回前端
+         */
+        
+        // 通过 AuthenticationManager(在SecurityConfig中注入到了容器中) 进行用户身份认证
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
 

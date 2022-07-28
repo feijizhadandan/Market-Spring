@@ -37,14 +37,16 @@ spring:
         max-active: 8
         # #连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
+  # Jackson的LocalDateTime序列化格式
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
 
+# token配置
 token:
+  # token 有效期(分钟)
   expireTime: 30
-
-# 开启debug模式
-#debug: true
+  # token自定义标识
+  header: Authorization
 
 minidao :
   base-package: org.jeecg.modules.jmreport.desreport.dao*

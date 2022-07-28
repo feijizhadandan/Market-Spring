@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
  * AuthenticationManager需要在SecurityConfig中配置将AuthenticationManager注入容器，方便在Service层自动装配使用
  */
 @RestController
-@RequestMapping("/user")
 public class LoginController {
 
     @Autowired
@@ -25,12 +24,14 @@ public class LoginController {
 
     @PostMapping("/login")
     public AjaxResult login(@RequestBody User user) {
-        return loginService.login(user);
+        AjaxResult result = loginService.login(user);
+        return result;
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/out")
     public AjaxResult logout(HttpServletRequest request) {
         String token = request.getHeader("token");
-        return loginService.logout(token);
+        AjaxResult result = loginService.logout(token);
+        return result;
     }
 }

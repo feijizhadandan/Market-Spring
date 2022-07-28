@@ -58,7 +58,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         
         if(!Objects.isNull(loginUser))
         {
-            // 存入SecurityContextHolder(以LoginUser的格式存在Holder, 所以想删除时也从Holder中取出)
+            // 存入SecurityContextHolder(以LoginUser的格式存储在Holder, 所以想删除时也从Holder中移除)
             UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
 

@@ -27,7 +27,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     /**
-     * 添加自定义的序列化器, 用于序列化 LocalDateTime 和 Long类型
+     * 序列化总结：
+     *      1、如果使用JDK序列化方式，序列化结果可读性较差，并且必须实现Serializable接口
+     *      2、推荐使用Json序列化方式，Json序列化只会序列化键、值，不包含内容信息，因此在反序列时需要提供对应的类型。
+     *      
+     *      精度丢失问题：对象中的Long属性是可以正常序列化的，但是Long属性在前端JS接收后，表达不出那么高精度的值，因此需要对Long类型使用String的序列化方式，序列化结果就是带双引号的字符串
+     *      LocalDateTime的显示问题：如果直接进行Json序列化，会导致结果格式为："yyyy-MM-ddTHH:mm:ss"(中间有个T)，因此也需要自定义序列化结果的格式
+     *      两者都在JacksonObjectMapper中进行自定义，并将其添加到消息转换器中
+     */
+
+    /**
+     * 添加自定义的Jackson序列化器, 用于自定义序列化LocalDateTime的格式 和 将Long类型转换成字符串类型
      * @param converters
      */
     @Override

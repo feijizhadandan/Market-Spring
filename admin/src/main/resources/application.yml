@@ -48,6 +48,14 @@ token:
   # token自定义标识
   header: Authorization
 
+# 积木报表
 minidao :
   base-package: org.jeecg.modules.jmreport.desreport.dao*
   db-type: mysql
+  
+# minio
+minio:
+  endpoint: http://47.106.122.140:19000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  bucketName: test

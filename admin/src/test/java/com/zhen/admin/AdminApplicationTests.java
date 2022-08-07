@@ -2,9 +2,11 @@ package com.zhen.admin;
 
 import com.zhen.admin.domain.Book;
 import com.zhen.admin.service.BookService;
+import com.zhen.framework.config.MinioConfig;
 import com.zhen.framework.security.domain.User;
 import com.zhen.framework.security.mapper.SysMenuMapper;
 import com.zhen.framework.security.mapper.UserMapper;
+import io.minio.MinioClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +28,12 @@ class AdminApplicationTests {
 
     @Autowired
     private SysMenuMapper sysMenuMapper;
+    
+    @Autowired
+    private MinioClient minioClient;
+    
+    @Autowired
+    private MinioConfig minioConfig;
 
     @Test
     void contextLoads() {
@@ -44,5 +52,10 @@ class AdminApplicationTests {
     public void testMenuMapper() {
         List<String> strings = sysMenuMapper.selectPermsByUserId(1548959247104294913L);
         System.out.println(strings);
+    }
+    
+    @Test
+    public void testMinioUpload() {
+        
     }
 }

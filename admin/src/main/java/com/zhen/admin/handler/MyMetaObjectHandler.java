@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 // 实现数据库自动填充策略
-//@Slf4j  // 打印日志
+//@Slf4j
 @Component  // 将处理器加入到IOC容器中, 让MybatisPlus自动注入该类
 public class MyMetaObjectHandler implements MetaObjectHandler {
     // 插入时的填充策略

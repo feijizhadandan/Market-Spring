@@ -24,14 +24,22 @@ public class LoginController {
 
     @PostMapping("/login")
     public AjaxResult login(@RequestBody User user) {
-        AjaxResult result = loginService.login(user);
-        return result;
+        return loginService.login(user);
     }
 
     @PostMapping("/out")
     public AjaxResult logout(HttpServletRequest request) {
         String token = request.getHeader("token");
-        AjaxResult result = loginService.logout(token);
-        return result;
+        return loginService.logout(token);
+    }
+
+    /**
+     * 验证该用户(Token)的登录状态
+     * @param request
+     * @return
+     */
+    @PostMapping("/check")
+    public AjaxResult checkLoginStatus(HttpServletRequest request) {
+        return loginService.checkLoginStatus(request);
     }
 }

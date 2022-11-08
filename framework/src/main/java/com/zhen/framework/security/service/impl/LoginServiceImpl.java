@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -88,5 +89,16 @@ public class LoginServiceImpl implements LoginService {
         
         return AjaxResult.success("注销成功");
 
+    }
+
+    /**
+     * 验证登录状态
+     * @param request 请求体
+     * @return 是否登录
+     */
+    @Override
+    public AjaxResult checkLoginStatus(HttpServletRequest request) {
+        LoginUser loginUser = tokenService.getLoginUser(request);
+        return loginUser == null ? AjaxResult.error("用户未登录") : AjaxResult.success("用户已登录");
     }
 }

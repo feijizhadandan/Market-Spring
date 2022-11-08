@@ -32,7 +32,7 @@
       <module name="framework" options="-parameters" />
       <module name="generator" options="-parameters" />
       <module name="system" options="-parameters" />
-      <module name="template" options="-parameters" />
+      <module name="template" options="" />
       <module name="web" options="-parameters" />
     </option>
   </component>

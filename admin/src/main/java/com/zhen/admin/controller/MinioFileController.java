@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Slf4j
+// @Slf4j
 @Api(tags = "minio-file-controller")
 @RestController
 @RequestMapping("/minio")

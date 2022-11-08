@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
+// @Slf4j
 @Api(tags = "test-book-controller")
 @RestController
 @RequestMapping("/book")

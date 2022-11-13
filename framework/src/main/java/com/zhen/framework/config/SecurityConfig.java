@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * BCrypt 密码生成、校验器
-     * @return
+     * @return 密码生成、校验器
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 将AuthenticationManager注入容器，用于用户身份认证
-     * @return
+     * @return 返回 AuthenticationManager 对象（注入IOC容器）
      * @throws Exception
      */
     @Bean
@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  *      如果有，则进行权限控制(存进Holder时，存了一份权限列表进去)
                  */
                 // 对于登录接口，允许匿名访问
-                .antMatchers("/login").anonymous()
+                .antMatchers("/login", "/register").anonymous()
                 // 对于积木报表资源，允许匿名访问
                 .antMatchers("/jmreport/**").permitAll()
                 // 静态资源，可匿名访问

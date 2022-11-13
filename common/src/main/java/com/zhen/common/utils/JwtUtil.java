@@ -29,7 +29,7 @@ public class JwtUtil {
     /**
      * 生成jtw
      * @param subject token中要存放的数据（json格式）
-     * @return
+     * @return 生成的JWT字符串
      */
     public static String createJWT(String subject) {
         JwtBuilder builder = getJwtBuilder(subject, null, getUUID());// 设置过期时间
@@ -40,7 +40,7 @@ public class JwtUtil {
      * 生成jtw
      * @param subject token中要存放的数据（json格式）
      * @param ttlMillis token超时时间
-     * @return
+     * @return 生成的JWT字符串
      */
     public static String createJWT(String subject, Long ttlMillis) {
         JwtBuilder builder = getJwtBuilder(subject, ttlMillis, getUUID());// 设置过期时间
@@ -66,13 +66,6 @@ public class JwtUtil {
                 .setExpiration(expDate);
     }
 
-    /**
-     * 创建token
-     * @param id
-     * @param subject
-     * @param ttlMillis
-     * @return
-     */
     public static String createJWT(String id, String subject, Long ttlMillis) {
         JwtBuilder builder = getJwtBuilder(subject, ttlMillis, id);// 设置过期时间
         return builder.compact();

@@ -22,7 +22,7 @@ public class BookController {
     private BookService bookService;
 
     @ApiOperation("获取所有图书信息")
-    @PreAuthorize("hasAuthority('system:book')")
+    @PreAuthorize("hasAuthority('system:buy')")
     @GetMapping()
     public AjaxResult getAllBook() {
         List<Book> list = bookService.list();

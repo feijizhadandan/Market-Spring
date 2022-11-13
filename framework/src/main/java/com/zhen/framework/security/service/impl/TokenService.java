@@ -46,8 +46,8 @@ public class TokenService {
 
     /**
      * 通过request中的token, 获取redis中的LoginUser
-     * @param request
-     * @return
+     * @param request 请求
+     * @return 该 token 对应的 LoginUser 对象
      */
     public LoginUser getLoginUser(HttpServletRequest request) {
         // 获取请求头上的token

@@ -90,8 +90,8 @@ public class MinioUtil {
 
     /**
      * 文件上传
-     * @param file
-     * @return
+     * @param file 文件本身
+     * @return 返回 Minio上的文件地址
      */
     public String upload(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
@@ -126,8 +126,8 @@ public class MinioUtil {
 
     /**
      * 获取临时预览的图片URL
-     * @param fileName
-     * @return
+     * @param fileName 文件名称
+     * @return 文件临时URL
      */
     public String preview(String fileName) {
         GetPresignedObjectUrlArgs urlArgs = GetPresignedObjectUrlArgs.builder()

@@ -2,6 +2,7 @@ package com.zhen.framework.security.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  */
 
 @Data
+@NoArgsConstructor
 @TableName("sys_user")
 public class User implements Serializable {
 
@@ -45,4 +47,13 @@ public class User implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     @Version
     private Long version;
+
+    public User(String userName, String nickName, String email, String phone, Character sex, String password) {
+        this.userName = userName;
+        this.nickName = nickName;
+        this.email = email;
+        this.phone = phone;
+        this.sex = sex;
+        this.password = password;
+    }
 }

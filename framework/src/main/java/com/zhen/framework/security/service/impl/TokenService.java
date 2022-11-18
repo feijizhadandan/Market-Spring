@@ -6,6 +6,7 @@ import com.zhen.common.utils.IdUtils;
 import com.zhen.common.utils.JwtUtil;
 import com.zhen.common.utils.RedisUtil;
 import com.zhen.framework.security.domain.LoginUser;
+import com.zhen.framework.security.domain.User;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -135,5 +136,14 @@ public class TokenService {
      */
     public String getRedisTokenKey(String uuid) {
         return Constants.LOGIN_USER_KEY + uuid;
+    }
+
+    /**
+     * 返回前端传来的 Token 对应的用户 User 信息
+     * @param request 请求
+     * @return User
+     */
+    public User getLoginUserDetail(HttpServletRequest request) {
+        return getLoginUser(request).getUser();
     }
 }

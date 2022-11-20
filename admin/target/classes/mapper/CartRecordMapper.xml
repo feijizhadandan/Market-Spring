@@ -3,7 +3,7 @@
 <mapper namespace="com.zhen.admin.mapper.CartRecordMapper">
 
     <select id="getAllRecord" resultType="com.zhen.admin.vo.CartVo">
-        select p.code, p.product_name, p.product_price, cr.count
+        select p.id, p.code, p.product_name, p.product_price, cr.count
         from cart_record cr left outer join product p on cr.product_id = p.id
         where cr.buyer_id = #{buyerId}
     </select>

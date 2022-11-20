@@ -3,8 +3,11 @@ package com.zhen.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zhen.admin.domain.BuyRecord;
 import com.zhen.admin.domain.CartRecord;
 import com.zhen.admin.dto.CartDto;
+import com.zhen.admin.dto.PayProductDto;
+import com.zhen.admin.mapper.BuyRecordMapper;
 import com.zhen.admin.mapper.CartRecordMapper;
 import com.zhen.admin.service.CartRecordService;
 import com.zhen.admin.vo.CartVo;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -21,6 +25,9 @@ public class CartRecordServiceImpl extends ServiceImpl<CartRecordMapper, CartRec
 
     @Autowired
     private CartRecordMapper cartRecordMapper;
+
+    @Autowired
+    private BuyRecordMapper buyRecordMapper;
 
     @Autowired
     private TokenService tokenService;
@@ -83,5 +90,17 @@ public class CartRecordServiceImpl extends ServiceImpl<CartRecordMapper, CartRec
             return AjaxResult.error("删除失败");
         else
             return AjaxResult.success("删除成功");
+    }
+
+    @Override
+    public AjaxResult payProduct(List<PayProductDto> payProductList, HttpServletRequest request) {
+        Long buyerId = tokenService.getLoginUserDetail(request).getId();
+        for (PayProductDto payProductDto : payProductList) {
+            // 添加用户购买记录
+            buyRecordMapper.insert(new BuyRecord(buyerId, payProductDto.getId(), payProductDto.getCount(), LocalDateTime.now()));
+            // 清空对应的购物车信息
+            deleteCartRecord(payProductDto.getId(), request);
+        }
+        return AjaxResult.success("购买成功");
     }
 }

@@ -1,9 +1,9 @@
 package com.zhen.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zhen.admin.domain.BrowseBuyRecord;
+import com.zhen.admin.domain.BrowseRecord;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
-public interface BrowseBuyRecordMapper extends BaseMapper<BrowseBuyRecord> {
+public interface BrowseRecordMapper extends BaseMapper<BrowseRecord> {
 }

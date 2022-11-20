@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhen.admin.mapper.ProductMapper">
+
+    <select id="searchByKeyword" resultType="com.zhen.admin.domain.Product">
+        select *
+        from product
+        where product.product_name LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+</mapper>

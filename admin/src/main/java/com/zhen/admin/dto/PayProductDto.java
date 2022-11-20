@@ -1,11 +1,13 @@
-package com.zhen.admin.vo;
+package com.zhen.admin.dto;
 
 import lombok.Data;
 
+/**
+ * 购物车中支付的条目
+ */
 @Data
-public class CartVo {
+public class PayProductDto {
     private Long id;
-    private Long code;
     private String productName;
     private Double productPrice;
     private Integer count;

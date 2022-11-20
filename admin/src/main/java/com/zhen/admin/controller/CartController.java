@@ -1,6 +1,7 @@
 package com.zhen.admin.controller;
 
 import com.zhen.admin.dto.CartDto;
+import com.zhen.admin.dto.PayProductDto;
 import com.zhen.admin.service.CartRecordService;
 import com.zhen.common.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/cart")
@@ -61,6 +63,18 @@ public class CartController {
     @PreAuthorize("hasAuthority('system:buy')")
     public AjaxResult deleteCartRecord(@PathVariable Long id, HttpServletRequest request) {
         return cartRecordService.deleteCartRecord(id, request);
+    }
+
+    /**
+     * 用户在购物车中支付购买选中物品
+     * @param payProductList 购物车中被选中的商品列表
+     * @param request 请求
+     * @return 响应消息
+     */
+    @PostMapping("/pay")
+    @PreAuthorize("hasAuthority('system:buy')")
+    public AjaxResult payProduct(@RequestBody List<PayProductDto> payProductList, HttpServletRequest request) {
+        return cartRecordService.payProduct(payProductList, request);
     }
 
 }

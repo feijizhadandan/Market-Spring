@@ -4,18 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zhen.admin.domain.BrowseBuyRecord;
+import com.zhen.admin.domain.BrowseRecord;
 import com.zhen.admin.domain.Product;
-import com.zhen.admin.dto.ProductDto;
-import com.zhen.admin.mapper.BrowseBuyRecordMapper;
+import com.zhen.admin.mapper.BrowseRecordMapper;
 import com.zhen.admin.mapper.ProductMapper;
-import com.zhen.admin.service.BrowseBuyRecordService;
 import com.zhen.admin.service.ProductService;
 import com.zhen.common.domain.AjaxResult;
 import com.zhen.framework.security.domain.User;
 import com.zhen.framework.security.service.impl.TokenService;
 import com.zhen.framework.utils.MinioUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +31,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
     private TokenService tokenService;
 
     @Autowired
-    private BrowseBuyRecordMapper bbrMapper;
+    private BrowseRecordMapper bbrMapper;
 
     @Autowired
     private MinioUtil minioUtil;
@@ -133,7 +130,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Override
     public void addBrowseRecord(Product product, HttpServletRequest request) {
-        bbrMapper.insert(new BrowseBuyRecord(product.getId(), tokenService.getLoginUserDetail(request).getId(), '1', LocalDateTime.now()));
+        bbrMapper.insert(new BrowseRecord(product.getId(), tokenService.getLoginUserDetail(request).getId(), LocalDateTime.now()));
+    }
+
+    @Override
+    public AjaxResult searchProduct(String keyword, HttpServletRequest request) {
+        List<Product> products = productMapper.searchByKeyword(keyword);
+        return AjaxResult.success(products);
     }
 
 }

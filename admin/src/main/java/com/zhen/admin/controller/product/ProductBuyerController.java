@@ -37,4 +37,16 @@ public class ProductBuyerController {
         return productService.getShowProductDetail(id, request);
     }
 
+    /**
+     * 用户关键词搜索商品
+     * @param keyword 关键词
+     * @param request 请求
+     * @return 响应消息
+     */
+    @GetMapping("/search/{keyword}")
+    @PreAuthorize("hasAuthority('system:buy')")
+    public AjaxResult searchProduct(@PathVariable String keyword, HttpServletRequest request) {
+        return productService.searchProduct(keyword, request);
+    }
+
 }

@@ -28,4 +28,5 @@ public interface ProductService extends IService<Product> {
 
     void addBrowseRecord(Product product, HttpServletRequest request);
 
+    AjaxResult searchProduct(String keyword, HttpServletRequest request);
 }

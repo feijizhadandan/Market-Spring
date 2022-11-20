@@ -18,6 +18,7 @@ public class Product {
     private Integer productCount;
     private String productIntroduction;
     private Boolean isShow;
+    private String photoUrl;
 
     @TableField(fill = FieldFill.INSERT)
     @TableLogic

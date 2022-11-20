@@ -163,4 +163,37 @@ public class MinioUtil {
         }
         return true;
     }
+
+    /**
+     * 商品图片上传
+     * @param file 商品图片文件
+     * @return 返回 Minio上的文件地址
+     */
+    public String uploadProductPhoto(MultipartFile file, String productName) {
+        // 设置文件名称（用商品名称命名）
+        String fileName = minioConfig.getBucketName() + "_" + productName + ".jpg";
+
+        try {
+            InputStream inputStream = file.getInputStream();
+            // 将文件名和文件流传入，并设置好上传Bucket的名称
+            PutObjectArgs objectArgs = PutObjectArgs.builder()
+                    .bucket(minioConfig.getBucketName())
+                    .object(fileName)
+                    .stream(inputStream, file.getSize(), -1)
+                    .contentType(file.getContentType())
+                    .build();
+
+            minioClient.putObject(objectArgs);
+            inputStream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        // 返回的值就是Minio上的文件地址
+        return minioConfig.getEndpoint() + "/" + minioConfig.getBucketName() + "/" + fileName;
+    }
+
+
 }

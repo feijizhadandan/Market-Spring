@@ -27,14 +27,14 @@ public class ProductBuyerController {
     }
 
     /**
-     * 展示用户可见商品的详细信息
+     * 展示用户可见商品的详细信息（添加用户浏览记录）
      * @param id 商品的 id
      * @return 相应消息
      */
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('system:buy')")
-    public AjaxResult getShowProductDetail(@PathVariable Long id) {
-        return productService.getShowProductDetail(id);
+    public AjaxResult getShowProductDetail(@PathVariable Long id, HttpServletRequest request) {
+        return productService.getShowProductDetail(id, request);
     }
 
 }

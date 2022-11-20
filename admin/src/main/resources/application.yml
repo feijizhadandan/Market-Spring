@@ -58,4 +58,4 @@ minio:
   endpoint: http://47.106.122.140:19000
   accessKey: minioadmin
   secretKey: minioadmin
-  bucketName: test
+  bucketName: productphoto

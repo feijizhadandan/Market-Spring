@@ -1,11 +1,13 @@
 package com.zhen.admin.controller.product;
 
 import com.zhen.admin.domain.Product;
+import com.zhen.admin.dto.ProductDto;
 import com.zhen.admin.service.ProductService;
 import com.zhen.common.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,7 +60,20 @@ public class ProductManagerController {
     @PutMapping()
     @PreAuthorize("hasAuthority('system:manager')")
     public AjaxResult updateProduct(@RequestBody Product product, HttpServletRequest request) {
-        return productService.updateProduct (product, request);
+        return productService.updateProduct(product, request);
+    }
+
+    /**
+     * 上传商品图片
+     * @param photoFile 图片文件
+     * @param id 商品 id
+     * @param request 请求
+     * @return 响应消息
+     */
+    @PostMapping("/photo/{id}")
+    @PreAuthorize("hasAuthority('system:manager')")
+    public AjaxResult upload(@RequestPart MultipartFile photoFile, @PathVariable Long id, HttpServletRequest request) {
+        return productService.uploadProductPhoto(photoFile, id, request);
     }
 
     /**

@@ -97,9 +97,9 @@ public class CartRecordServiceImpl extends ServiceImpl<CartRecordMapper, CartRec
         Long buyerId = tokenService.getLoginUserDetail(request).getId();
         for (PayProductDto payProductDto : payProductList) {
             // 添加用户购买记录
-            buyRecordMapper.insert(new BuyRecord(buyerId, payProductDto.getId(), payProductDto.getCount(), LocalDateTime.now()));
+            buyRecordMapper.insert(new BuyRecord(buyerId, payProductDto.getProductId(), payProductDto.getProductPrice(), payProductDto.getCount(), payProductDto.getProductPrice() * payProductDto.getCount(), LocalDateTime.now()));
             // 清空对应的购物车信息
-            deleteCartRecord(payProductDto.getId(), request);
+            deleteCartRecord(payProductDto.getProductId(), request);
         }
         return AjaxResult.success("购买成功");
     }

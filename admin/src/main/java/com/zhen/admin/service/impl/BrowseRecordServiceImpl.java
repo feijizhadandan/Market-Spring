@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhen.admin.domain.BrowseRecord;
 import com.zhen.admin.mapper.BrowseRecordMapper;
 import com.zhen.admin.service.BrowseRecordService;
+import com.zhen.admin.vo.BrowseRecordVo;
 import com.zhen.common.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class BrowseRecordServiceImpl extends ServiceImpl<BrowseRecordMapper, Bro
 
     @Override
     public AjaxResult getBrowseRecord(HttpServletRequest request) {
-        List<BrowseRecord> browseRecords = bbMapper.selectList(null);
+        List<BrowseRecordVo> browseRecords = bbMapper.getBrowseRecordList();
         return AjaxResult.success(browseRecords);
     }
 }

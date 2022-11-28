@@ -19,7 +19,7 @@ public class ProductManagerController {
     private ProductService productService;
 
     /**
-     * 查看所有商品（包括被删除的、不展示的、数量为0的）
+     * 查看所有商品（包括不展示的、数量为0的）
      * @return 响应消息
      */
     @GetMapping()

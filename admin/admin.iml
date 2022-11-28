@@ -18,7 +18,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="admin" />
+          <factory-entry name="admin" value="32d3784b-7aac-4ad4-b9ee-1cdeb0e4b24b" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

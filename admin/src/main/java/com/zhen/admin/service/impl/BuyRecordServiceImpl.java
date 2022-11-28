@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zhen.admin.domain.BuyRecord;
 import com.zhen.admin.mapper.BuyRecordMapper;
 import com.zhen.admin.service.BuyRecordService;
+import com.zhen.admin.vo.BuyRecordVo;
 import com.zhen.common.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ public class BuyRecordServiceImpl extends ServiceImpl<BuyRecordMapper, BuyRecord
 
     @Override
     public AjaxResult getBuyRecord(HttpServletRequest request) {
-        List<BuyRecord> buyRecords = brMapper.selectList(null);
+        List<BuyRecordVo> buyRecords = brMapper.getBuyRecordList();
         return AjaxResult.success(buyRecords);
     }
 }

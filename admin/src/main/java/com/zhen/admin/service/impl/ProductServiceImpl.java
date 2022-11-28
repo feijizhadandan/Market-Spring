@@ -9,6 +9,7 @@ import com.zhen.admin.domain.Product;
 import com.zhen.admin.mapper.BrowseRecordMapper;
 import com.zhen.admin.mapper.ProductMapper;
 import com.zhen.admin.service.ProductService;
+import com.zhen.admin.vo.ProductVo;
 import com.zhen.common.domain.AjaxResult;
 import com.zhen.framework.security.domain.User;
 import com.zhen.framework.security.service.impl.TokenService;
@@ -44,8 +45,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Override
     public AjaxResult getProductDetail(Long id) {
-        Product product = productMapper.selectById(id);
-        return AjaxResult.success(product);
+        ProductVo productVo = productMapper.getProductDetail(id);
+        return AjaxResult.success(productVo);
     }
 
     @Override

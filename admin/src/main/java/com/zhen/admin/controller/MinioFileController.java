@@ -18,10 +18,17 @@ public class MinioFileController {
     @Autowired
     private MinioUtil minioUtil;
     
-    @ApiOperation("上传文件返回url")
+    @ApiOperation("上传文件到默认bucket,返回url")
     @PostMapping("/upload")
     public AjaxResult upload(@RequestPart MultipartFile file) {
         String filename = minioUtil.upload(file);
+        return AjaxResult.success(filename);
+    }
+
+    @ApiOperation("上传文件到指定bucket,返回url")
+    @PostMapping("/upload/{bucketName}")
+    public AjaxResult uploadToBucket(@RequestPart MultipartFile file, @PathVariable String bucketName) {
+        String filename = minioUtil.uploadToBucket(file, bucketName);
         return AjaxResult.success(filename);
     }
     

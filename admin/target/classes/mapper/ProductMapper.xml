@@ -5,8 +5,21 @@
     <select id="searchByKeyword" resultType="com.zhen.admin.domain.Product">
         select *
         from product
-        where product.product_name LIKE CONCAT('%', #{keyword}, '%')
+        where
+            product.product_name LIKE CONCAT('%', #{keyword}, '%')
+          AND product.is_show = 1
+          AND product.del_flag = 0
     </select>
+
+    <select id="getAllProductDetail" resultType="com.zhen.admin.vo.ProductVo">
+        -- 当需要某个表中的所有属性时，可以用 p.* 的方式来获取 --
+        select p.*, su1.user_name create_name, su2.user_name update_name
+        from product p
+                 left outer join sys_user su1 on p.create_by = su1.id
+                 left outer join sys_user su2 on p.update_by = su2.id
+        where p.del_flag = 0
+    </select>
+
     <select id="getProductDetail" resultType="com.zhen.admin.vo.ProductVo">
         -- 当需要某个表中的所有属性时，可以用 p.* 的方式来获取 --
         select p.*, su1.user_name create_name, su2.user_name update_name
@@ -15,5 +28,7 @@
             left outer join sys_user su2 on p.update_by = su2.id
         where
             p.id = #{id}
+          AND p.del_flag = 0
     </select>
+
 </mapper>

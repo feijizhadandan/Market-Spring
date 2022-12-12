@@ -93,13 +93,13 @@ public class CartRecordServiceImpl extends ServiceImpl<CartRecordMapper, CartRec
     }
 
     @Override
-    public AjaxResult payProduct(List<PayProductDto> payProductList, HttpServletRequest request) {
+    public AjaxResult payProduct(List<CartVo> payProductList, HttpServletRequest request) {
         Long buyerId = tokenService.getLoginUserDetail(request).getId();
-        for (PayProductDto payProductDto : payProductList) {
+        for (CartVo cartVo : payProductList) {
             // 添加用户购买记录
-            buyRecordMapper.insert(new BuyRecord(buyerId, payProductDto.getProductId(), payProductDto.getProductPrice(), payProductDto.getCount(), payProductDto.getProductPrice() * payProductDto.getCount(), LocalDateTime.now()));
+            buyRecordMapper.insert(new BuyRecord(buyerId, cartVo.getId(), cartVo.getProductPrice(), cartVo.getCount(), cartVo.getProductPrice() * cartVo.getCount(), LocalDateTime.now()));
             // 清空对应的购物车信息
-            deleteCartRecord(payProductDto.getProductId(), request);
+            deleteCartRecord(cartVo.getId(), request);
         }
         return AjaxResult.success("购买成功");
     }

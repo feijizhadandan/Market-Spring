@@ -5,6 +5,7 @@ import com.zhen.admin.domain.CartRecord;
 
 import com.zhen.admin.dto.CartDto;
 import com.zhen.admin.dto.PayProductDto;
+import com.zhen.admin.vo.CartVo;
 import com.zhen.common.domain.AjaxResult;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,5 +20,5 @@ public interface CartRecordService extends IService<CartRecord> {
 
     AjaxResult deleteCartRecord(Long productId, HttpServletRequest request);
 
-    AjaxResult payProduct(List<PayProductDto> payProductList, HttpServletRequest request);
+    AjaxResult payProduct(List<CartVo> payProductList, HttpServletRequest request);
 }

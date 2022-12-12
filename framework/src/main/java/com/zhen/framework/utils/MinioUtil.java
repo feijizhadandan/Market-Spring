@@ -123,6 +123,42 @@ public class MinioUtil {
         return minioConfig.getEndpoint() + "/" + minioConfig.getBucketName() + "/" + fileName;
     }
 
+    /**
+     *
+     * @param file 文件本身
+     * @param bucketName 目标桶名称
+     * @return 返回 Minio上的文件地址
+     */
+    public String uploadToBucket(MultipartFile file, String bucketName) {
+        String originalFilename = file.getOriginalFilename();
+
+        // 设置文件名称（唯一，否则会覆盖）
+        String fileName = minioConfig.getBucketName() + "_"
+                + System.currentTimeMillis() + "_"
+                + originalFilename;
+
+        try {
+            InputStream inputStream = file.getInputStream();
+            // 将文件名和文件流传入，并设置好上传Bucket的名称
+            PutObjectArgs objectArgs = PutObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(fileName)
+                    .stream(inputStream, file.getSize(), -1)
+                    .contentType(file.getContentType())
+                    .build();
+
+            minioClient.putObject(objectArgs);
+            inputStream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        // 返回的值就是Minio上的文件地址
+        return minioConfig.getEndpoint() + "/" + bucketName + "/" + fileName;
+    }
+
 
     /**
      * 获取临时预览的图片URL
@@ -194,6 +230,4 @@ public class MinioUtil {
         // 返回的值就是Minio上的文件地址
         return minioConfig.getEndpoint() + "/" + minioConfig.getBucketName() + "/" + fileName;
     }
-
-
 }

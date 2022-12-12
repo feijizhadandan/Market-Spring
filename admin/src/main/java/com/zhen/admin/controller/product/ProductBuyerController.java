@@ -21,7 +21,6 @@ public class ProductBuyerController {
      * @return 相应消息
      */
     @GetMapping()
-    @PreAuthorize("hasAuthority('system:buy')")
     public AjaxResult getShowProduct() {
         return productService.getShowProduct();
     }
@@ -44,7 +43,6 @@ public class ProductBuyerController {
      * @return 响应消息
      */
     @GetMapping("/search/{keyword}")
-    @PreAuthorize("hasAuthority('system:buy')")
     public AjaxResult searchProduct(@PathVariable String keyword, HttpServletRequest request) {
         return productService.searchProduct(keyword, request);
     }

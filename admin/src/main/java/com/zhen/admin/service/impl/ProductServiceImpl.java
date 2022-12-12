@@ -39,7 +39,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> impl
 
     @Override
     public AjaxResult getAllProduct() {
-        List<Product> products = productMapper.selectList(new QueryWrapper<>());
+        List<ProductVo> products = productMapper.getAllProductDetail();
         return AjaxResult.success(products);
     }
 

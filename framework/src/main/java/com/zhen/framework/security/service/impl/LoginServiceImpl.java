@@ -28,15 +28,12 @@ public class LoginServiceImpl implements LoginService {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private RedisUtil redisUtil;
-
-    @Autowired
     private TokenService tokenService;
 
     /**
      * 登录
-     * @param user
-     * @return
+     * @param user 登录信息
+     * @return 响应消息
      */
     @Override
     public AjaxResult login(User user) {
@@ -76,11 +73,10 @@ public class LoginServiceImpl implements LoginService {
 
     /**
      * 注销
-     * @return
+     * @return 响应消息
      */
     @Override
     public AjaxResult logout(String token) {
-
         // 先获取LoginUser
         UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
@@ -88,7 +84,6 @@ public class LoginServiceImpl implements LoginService {
         tokenService.deleteFromCache(loginUser);
         
         return AjaxResult.success("注销成功");
-
     }
 
     /**

@@ -11,5 +11,8 @@ import java.util.List;
 public interface ProductMapper extends BaseMapper<Product> {
     List<Product> searchByKeyword(String keyword);
 
+    List<ProductVo> getAllProductDetail();
+
     ProductVo getProductDetail(Long id);
+
 }

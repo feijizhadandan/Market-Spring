@@ -3,6 +3,7 @@ package com.zhen.admin.controller;
 import com.zhen.admin.dto.CartDto;
 import com.zhen.admin.dto.PayProductDto;
 import com.zhen.admin.service.CartRecordService;
+import com.zhen.admin.vo.CartVo;
 import com.zhen.common.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -73,7 +74,7 @@ public class CartController {
      */
     @PostMapping("/pay")
     @PreAuthorize("hasAuthority('system:buy')")
-    public AjaxResult payProduct(@RequestBody List<PayProductDto> payProductList, HttpServletRequest request) {
+    public AjaxResult payProduct(@RequestBody List<CartVo> payProductList, HttpServletRequest request) {
         return cartRecordService.payProduct(payProductList, request);
     }
 

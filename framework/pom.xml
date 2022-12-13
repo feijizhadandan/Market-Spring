@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- 设置父工程 -->
+    <!-- 指定父模块 -->
     <parent>
         <artifactId>template</artifactId>
         <groupId>com.zhen</groupId>
@@ -13,6 +13,7 @@
     <groupId>com.zhen</groupId>
     <artifactId>framework</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>framework</name>
     <description>framework: 专门用于集成框架</description>
@@ -22,7 +23,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>com.zhen</groupId>
             <artifactId>common</artifactId>
@@ -31,13 +31,5 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- 配置父模块 -->
+    <!-- 指定父模块 -->
     <parent>
         <artifactId>template</artifactId>
         <groupId>com.zhen</groupId>
@@ -13,6 +13,7 @@
     <groupId>com.zhen</groupId>
     <artifactId>system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <name>system</name>
     <description>Mapper_Service_Domain_Pom</description>
@@ -24,14 +25,5 @@
     <dependencies>
 
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>

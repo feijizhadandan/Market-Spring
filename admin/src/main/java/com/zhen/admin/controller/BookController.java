@@ -26,7 +26,7 @@ public class BookController {
     @GetMapping()
     public AjaxResult getAllBook() {
         List<Book> list = bookService.list();
-        return AjaxResult.success(list);
+        return AjaxResult.success("啥也没有");
     }
 
     @ApiOperation("增加图书")

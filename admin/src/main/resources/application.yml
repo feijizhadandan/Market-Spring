@@ -47,6 +47,25 @@ spring:
       maxFileSize: 10MB
       # 单个上传请求中所有文件总大小的限制
       maxRequestSize: 10MB
+  # 邮箱配置
+  mail:
+    # 平台地址，这里用的是qq邮箱
+    host: smtp.qq.com
+    # 端口号
+    port: 587
+    # 协议 默认就是smtp (使用465要将protocol改为smtps)
+    protocol: smtp
+    #发送邮件的邮箱地址：改成自己的邮箱
+    username: 215628266@qq.com
+    #授权码
+    password: viqwfvbykesbbgcc
+    # 设置开启ssl (QQ邮箱需要开启SSL)
+    properties:
+      mail:
+        stmp:
+          ssl:
+            enable: true
+    from: 215628266@qq.com
 
 # token配置
 token:
@@ -66,3 +85,5 @@ minio:
   accessKey: minioadmin
   secretKey: minioadmin
   bucketName: productphoto
+
+# 邮箱

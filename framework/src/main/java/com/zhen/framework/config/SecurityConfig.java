@@ -70,10 +70,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  *      如果没有LoginUser信息，说明是匿名访问
                  *      如果有，则进行权限控制(存进Holder时，存了一份权限列表进去)
                  */
-                // 对于登录、注册、查看商城的接口，允许匿名访问; minio允许匿名访问
-                .antMatchers("/login", "/register", "/product/buyer/**", "/minio/**").anonymous()
-                // 对于积木报表资源，允许匿名访问
-                .antMatchers("/jmreport/**").permitAll()
+                // 对于登录、注册、的接口，允许匿名访问; minio允许匿名访问
+                .antMatchers("/login", "/register", "/minio/**").anonymous()
+                // 对于积木报表资源，允许所有访问; 对于商城、搜索，允许所有访问
+                .antMatchers("/jmreport/**",  "/product/buyer",  "/product/buyer/search/**").permitAll()
                 // 静态资源，可匿名访问
                 .antMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js", "/profile/**").permitAll()
                 .antMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**").permitAll()                

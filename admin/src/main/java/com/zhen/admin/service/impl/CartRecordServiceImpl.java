@@ -13,6 +13,7 @@ import com.zhen.admin.service.CartRecordService;
 import com.zhen.admin.vo.CartVo;
 import com.zhen.common.domain.AjaxResult;
 import com.zhen.framework.security.service.impl.TokenService;
+import com.zhen.framework.utils.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,9 @@ public class CartRecordServiceImpl extends ServiceImpl<CartRecordMapper, CartRec
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private EmailUtil emailUtil;
 
     @Override
     public AjaxResult getBuyerCart(HttpServletRequest request) {
@@ -95,12 +99,21 @@ public class CartRecordServiceImpl extends ServiceImpl<CartRecordMapper, CartRec
     @Override
     public AjaxResult payProduct(List<CartVo> payProductList, HttpServletRequest request) {
         Long buyerId = tokenService.getLoginUserDetail(request).getId();
+        String toEmail = tokenService.getLoginUserDetail(request).getEmail();
+        double totalPrice = 0L;
+        StringBuilder msg = new StringBuilder();
+        msg.append("发货商品单：\n");
         for (CartVo cartVo : payProductList) {
             // 添加用户购买记录
             buyRecordMapper.insert(new BuyRecord(buyerId, cartVo.getId(), cartVo.getProductPrice(), cartVo.getCount(), cartVo.getProductPrice() * cartVo.getCount(), LocalDateTime.now()));
             // 清空对应的购物车信息
             deleteCartRecord(cartVo.getId(), request);
+            totalPrice += cartVo.getProductPrice() * cartVo.getCount();
+            msg.append("   ").append(cartVo.getProductName()).append(" x ").append(cartVo.getCount()).append("    ").append(cartVo.getProductPrice() * cartVo.getCount()).append("￥").append("\n");
         }
-        return AjaxResult.success("购买成功");
+        msg.append("\n");
+        msg.append("   ").append("支付金额：").append(totalPrice).append("￥");
+        emailUtil.sendSimpleMail(toEmail,"GuMarket发货声明",msg.toString());
+        return AjaxResult.success("支付成功，已发送发货邮件");
     }
 }

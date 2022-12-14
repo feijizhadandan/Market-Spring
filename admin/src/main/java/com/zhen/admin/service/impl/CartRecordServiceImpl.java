@@ -100,6 +100,7 @@ public class CartRecordServiceImpl extends ServiceImpl<CartRecordMapper, CartRec
     public AjaxResult payProduct(List<CartVo> payProductList, HttpServletRequest request) {
         Long buyerId = tokenService.getLoginUserDetail(request).getId();
         String toEmail = tokenService.getLoginUserDetail(request).getEmail();
+        System.out.println(toEmail);
         double totalPrice = 0L;
         StringBuilder msg = new StringBuilder();
         msg.append("发货商品单：\n");
@@ -114,7 +115,11 @@ public class CartRecordServiceImpl extends ServiceImpl<CartRecordMapper, CartRec
         msg.append("\n");
         msg.append("   ").append("支付金额：").append(totalPrice).append("￥");
 
-        // emailUtil.sendSimpleMail(toEmail,"GuMarket发货声明",msg.toString());
+        try {
+            emailUtil.sendSimpleMail(toEmail,"GuMarket发货声明",msg.toString());
+        } catch (Exception e) {
+            return AjaxResult.success("支付成功，但发货邮件发送失败（邮箱有误）");
+        }
 
         return AjaxResult.success("支付成功，已发送发货邮件");
     }

@@ -113,7 +113,9 @@ public class CartRecordServiceImpl extends ServiceImpl<CartRecordMapper, CartRec
         }
         msg.append("\n");
         msg.append("   ").append("支付金额：").append(totalPrice).append("￥");
-        emailUtil.sendSimpleMail(toEmail,"GuMarket发货声明",msg.toString());
+
+        // emailUtil.sendSimpleMail(toEmail,"GuMarket发货声明",msg.toString());
+
         return AjaxResult.success("支付成功，已发送发货邮件");
     }
 }
